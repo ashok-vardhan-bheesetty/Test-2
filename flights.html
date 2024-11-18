@@ -1,0 +1,556 @@
+<!DOCTYPE html >
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>SkyFlyy</title>
+        <link rel="stylesheet" href="./CSS/stylete.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/michalsnik/aos/2.0.1/dist/aos.css" />
+        <script src="https://cdn.rawgit.com/michalsnik/aos/2.0.1/dist/aos.js"></script>
+    </head>
+    <style>
+        body{
+           background-image: url(./images/flypg2.png);
+        }
+       
+        #navbar{
+            background-color:transparent;
+        }
+        .con-box{
+            box-sizing: border-box;
+            box-shadow:0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: white;
+        }
+        .contact{
+            background-color: white;
+        }
+        .icon-box{
+            border: none;
+        }
+    
+    </style>
+        <body>
+            <div class="pg1">
+                <nav id="navbar">
+                    <h5>Sky Fly</h5>
+                    <button class="toggle-button" onclick="toggleMenu()">☰</button>
+                        <ul id="nav-link">
+                            <button class="respo" type="submit"onClick="login()">Login / Signin</button>
+                            <li><a href="index.html" id="home-link">Home</a></li>
+                            <li><a href="Trains.html"id="trains-link">Trains</a></li>
+                            <li><a href="hotels.html" id="bookings-link">Hotels</a></li>
+                            <li><a href="offerste.html" id="Offers-link">Offers</a></li>
+                        </ul>
+                </nav>
+                <h2>
+                    "Choosing flight travel is like giving yourself the gift of time and exploration. It opens up horizons,
+                connecting you to places and cultures you’ve only dreamed of. Every flight is a new beginning, and you’re 
+                in for an adventure!"
+                </h2>
+            
+            </div>
+            <div class="container">
+                <div class="pg2"  >
+                    <form>
+                        <div class="class-type">
+                            <input type="radio" id="one-way" name="class-type" checked>
+                            <label for="one-way">One Way</label>
+                        
+                            <input type="radio" id="round-trip" name="class-type">
+                            <label for="round-trip">Round Trip</label>
+                        
+                            <input type="radio" id="multi-city" name="class-type">
+                            <label for="multi-city">Multi City</label>
+                            <h2>Book International and Domestic Flights</h2>
+                        </div>
+                        <div class="form-in">
+                            <input type="text" id="from_1" placeholder="Boarding Point" list="airports" required>
+                            <button type="button" class="swap-button" onclick="swapValues_1()">⇆</button>
+                            <input type="text" id="to_1" placeholder="Deboarding Point" list="airports" required>
+                        
+                            <button type="button" class="travelbtn" onclick="openModal()">No. Of Travellers <span id="cart1">1</span><span id="selected-class" style="margin-left: 10px;">Economy</span></button>
+                            <div class="date-picker">
+                                <label for="date-input">Departure</label>
+                                <input type="date" id="date-input">
+                                <div id="day-display" class="day-display">Day of the Week</div>
+                            </div>
+                            <div class="date-picker" id="return-date">
+                                <label for="return">Return</label>
+                                <input type="date" id="return">
+                                <div id="day-display-2" class="day-display">Day of the Week</div>
+                            </div>
+                        </div>
+                        <datalist id="airports">
+                            <option value="New Delhi,India"></option>
+                            <option value="Hyderabad,India"></option>
+                            <option value="Rajahmundry,India"></option>
+                            <option value="Visakhapatnam,India"></option>
+                            <option value="Mumbai,India"></option>
+                            <option value="Kochi,India"></option>
+                            <option value="Kolkata,India"></option>
+                            <option value="Coimbatore,India"></option>
+                            <option value="Madurai,India"></option>
+                        </datalist>
+        
+                        <!-- Multi-city container -->
+                       
+                        <div class="form-of" id="multi-cities" style="display: none;">
+                            <div id="city-container">
+                            </div>
+                            <button  type="button" class="addbtn" onclick="addCity()" id="multi-city">+Add city</button>
+                        </div>
+                        <div class="fare-options">
+                            <button  type="button" class="fare-btn active">Regular</button>
+                            <button type="button" class="fare-btn">Student</button>
+                        </div>
+        
+                        <button type="submit" class="search-btn" onclick="checkInputs()">Search</button>
+                    </form>
+                </div>
+            </div>
+        
+            <!-- Travelers Modal -->
+            <div id="nofp" class="modal" >
+                <div class="modal-content">
+                    <div class="container">
+                        <h2>Select Number of Travelers</h2>
+                        
+                        <div class="traveler-group">
+                            <span>Adults</span>
+                            <div class="counter">
+                                <button onclick="changeCount('adults', -1)">-</button>
+                                <input type="text" id="adults" value="1" readonly>
+                                <button onclick="changeCount('adults', 1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="traveler-group">
+                            <span>Children</span>
+                            <div class="counter">
+                                <button onclick="changeCount('children', -1)">-</button>
+                                <input type="text" id="children" value="0" readonly>
+                                <button onclick="changeCount('children', 1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Class Selection -->
+                        <h2>Choose the Class</h2>
+                        <input type="radio" id="economy" name="class-type" checked>
+                        <label for="economy">Economy</label>
+                        <input type="radio" id="premium" name="class-type" checked>
+                        <label for="premium">Premium Economy</label>
+                        <input type="radio" id="buisiness" name="class-type" checked>
+                        <label for="buisiness">Buisiness</label>
+                        <input type="radio" id="firstclass" name="class-type" checked>
+                        <label for="firstclass">First Class</label>
+                        
+                        <button class="done-button" onclick="travAdd()">Done</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" >
+                <div class="flights" >
+                        <div class="head1" >
+                            <h6>Popular Domastic Flights</h6>
+                        </div>
+                        <div class="flightlogo">
+                            <div class="card">
+                                <img src="./images/indigo.png">
+                                <h5>Indigo</h5>
+                            </div>
+                            <div class="card">
+                                <img src="./images/airindia.png">
+                                <h5>Air India</h5>
+                            </div>
+                            <div class="card">
+                                <img src="./images/airindiaex.png">
+                                <h5>Air India Express</h5>
+                            </div>
+                            <div class="card">
+                                <img src="./images/akasaair.png">
+                                <h5>Akasa Air</h5>
+                            </div>
+                            <div class="card">
+                                <img src="./images/vistara.png">
+                                <h5>Vistara</h5>
+                            </div>
+                            <div class="card">
+                                <img src="./images/spicejet.png">
+                                <h5>Spicejet</h5>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="container">
+                <div class="locations">
+                    <div class="row">
+                        <div class="col-md-5" >
+                           <h2>Popular Countries To Visit</h2>
+                           <h5>Wander Beyond Boundaries</h5>
+                           <p1>It adds a touch of inspiration, encouraging travelers to explore without restrictions and embrace the endless possibilities of adventure. Let me know if you'd like more variations!....</p1><br>
+                            <button type="button" class="button">Explore More</button>
+                        </div>
+                        <div class="col-md-7" >
+                            <div class="caro-box">
+                                <div class="image-slider">
+                                    <div class="slide active">
+                                        <img src="./images/dubai.webp" alt="Dubai">
+                                        <div class="info">
+                                            <h2>Dubai</h2>
+                                            <p>Discover the wonders of Dubai, where modern luxury meets rich culture.</p>
+                                        </div>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="./images/london.jpg" alt="London">
+                                        <div class="info">
+                                            <h2>London</h2>
+                                            <p>Explore the Heart of England</p>
+                                        </div>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="./images/usa.jpg" alt="USA">
+                                        <div class="info">
+                                            <h2>United States Of America</h2>
+                                            <p>Embark on thrilling desert safaris and unforgettable dune experiences.</p>
+                                        </div>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="./images/paris.webp" alt="paris">
+                                        <div class="info">
+                                            <h2>Paris</h2>
+                                            <p>Where Art and Romance Come Alive</p>
+                                        </div>
+                                    </div>
+                                    <div class="navigation">
+                                        <div class="btn active"></div>
+                                        <div class="btn"></div>
+                                        <div class="btn"></div>
+                                        <div class="btn"></div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="section1">
+                <div class="con-box" >
+                    <div class="contact">
+                        <p2>Contact Us</p2>
+                        <P5>Ashok Vardhan Bheesetty</P5>
+                        <p5>Mobile:8074872380</p5>
+                        <p5></p5><p></p>
+                    </div>
+                    <div class="contact-1">
+                        <p2>About Us</p2>
+                        <P5>Welcome to "Free Bus" We're a passionate team dedicated to making travel easy,
+                             affordable, and accessible for everyone. As travel enthusiasts, we understand the importance of 
+                             smooth and reliable travel planning, especially for buses.</P5>
+                        <p6>Our platform is designed to simplify the booking process, offering you convenient options and up-to-date schedules, with a focus on delivering an enjoyable user experience. While we may be new, we’re committed to building a community where travelers can connect, plan, and explore with confidence.
+    
+                            Thank you for trusting us with your journey. Let's get you moving!</p6>
+                    </div>
+                    <div class="contact-2">
+                        <h2>Available On</h2>
+                        <img src="./images/playapp.webp">
+                        <img src="./images//ioapp.webp">
+                    </div>
+                   <div class="icon-box">
+                    <i class='bx bxl-google' ></i>
+                    <i class='bx bxl-facebook'></i>
+                    <i class='bx bxl-twitter'></i>
+                    <i class='bx bxl-whatsapp' ></i>
+                   </div>
+                </div>          
+            </div>
+        </body>
+          <script>
+            function changeCount(type, delta) {
+                const input = document.getElementById(type);
+                let count = parseInt(input.value) + delta;
+                if (count < 0) count = 0;  // Ensure the count doesn't go below 0
+                input.value = count;
+            }
+        
+            function travAdd() {
+            const adults = parseInt(document.getElementById("adults").value);
+            const children = parseInt(document.getElementById("children").value);
+            const totalTravelers = adults + children;
+            document.getElementById("cart1").textContent = totalTravelers; // Update the cart count
+            closeModal(); // Close the modal
+        }
+        window.onscroll = function () {
+                const navbar = document.getElementById("navbar");
+                if (window.scrollY > 100) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            };
+
+        </script>
+          
+          <script>
+            const modal=document.getElementById("nofp");
+              // Open the modal
+          function openModal() {
+            document.getElementById("nofp").style.display = "block";
+          }
+          function closeModal(){
+            document.getElementById("nofp").style.display="none";
+          }
+          
+          // Close the modal
+         window.onclick= (event) => {
+            if (event.target === modal){
+                closeModal();
+            }   
+         }
+      
+
+        </script>
+        <script>
+            // Toggle mobile navbar
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-link');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close navbar when clicking outside
+        document.addEventListener("click", function(event) {
+            const navLinks = document.getElementById("nav-link");
+            const toggleButton = document.querySelector(".toggle-button");
+            if (!navLinks.contains(event.target) && !toggleButton.contains(event.target)) {
+                navLinks.classList.remove("active");
+    }
+    });
+
+        </script>
+        <script>
+            const dateInput = document.getElementById('date-input');
+            const dayDisplay = document.getElementById('day-display');
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                
+        
+            dateInput.addEventListener('change', () => {
+                const selectedDate = new Date(dateInput.value);
+                
+                // Get the day of the week
+                const dayOfWeek = daysOfWeek[selectedDate.getDay()];
+        
+                // Display the day of the week
+                dayDisplay.textContent = dayOfWeek ? dayOfWeek : 'Invalid Date';
+                
+            });
+        </script>
+        <script>
+            const dateInput_1 = document.getElementById('return');
+            const dayDisplay_1 = document.getElementById('day-display-2');
+        
+            dateInput_1.addEventListener('change', () => {
+                const selectedDate = new Date(dateInput_1.value);
+                // Get the day of the week
+                const dayOfWeek = daysOfWeek[selectedDate.getDay()];
+        
+                // Display the day of the week
+                dayDisplay_1.textContent = dayOfWeek ? dayOfWeek : 'Invalid Date';
+                
+            });
+        </script>
+       
+        <script>
+             
+            // Toggle active fare button
+            const fareButtons = document.querySelectorAll('.fare-btn');
+            fareButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    fareButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+        
+            // Toggle trip type visibility for 'Return' date field
+            const oneWayRadio = document.getElementById('one-way');
+            const roundTripRadio = document.getElementById('round-trip');
+            const multiCityRadio = document.getElementById('multi-city');
+            const returnField = document.getElementById('return').parentElement;
+            const multicities = document.getElementById('multi-cities');
+        
+            // Hide the "Return" field by default for "One Way" selection
+            oneWayRadio.addEventListener('change', () => {
+                if (oneWayRadio.checked) {
+                    returnField.style.display = 'none';
+                   multicities.style.display='none';
+                }
+            });
+        
+            // Show the "Return" field for "Round Trip" selection
+            roundTripRadio.addEventListener('change', () => {
+                if (roundTripRadio.checked) {
+                    returnField.style.display = 'flex';
+                    multicities.style.display='none';
+                }
+            });
+        
+            // Show the "Return" field for "Multi City" selection (as an example)
+            multiCityRadio.addEventListener('change', () => {
+                if (multiCityRadio.checked) {
+                    returnField.style.display = 'none';
+                    multicities.style.display='block';
+                }
+            });
+        
+            // Initialize the form with the correct visibility for the "Return" field
+            document.addEventListener('DOMContentLoaded', () => {
+                if (oneWayRadio.checked) {
+                    returnField.style.display = 'none';
+                }
+            });
+        </script>
+        <script>
+            function addCity(){
+    const newSection = document.createElement('div');
+    const citycontainer = document.getElementById('city-container');
+    newSection.classList.add('form-sections');
+    newSection.innerHTML = `
+        <div class="form-in" >
+            <hr></hr>
+            <input type="text" id="from_2" placeholder="Boarding Point" list="airports" required>
+            <button type="button" class="swap-button" onclick="swapValues_2()">⇆</button>
+            <input type="text" id="to_2" placeholder="Deboarding Point" list="airports" required>
+            <div class="date-picker">
+                <label for="date-input-1">Departure</label>
+                <input type="date" class="date2" id="date2">
+                <div class="day-display" id="day2">Day of the Week</div>
+            </div>
+            <button class="remove-btn" onClick="removeCity(this)">Remove</button>
+        </div>
+    `;
+    
+    citycontainer.append(newSection);
+
+    // Reattach the event listener to the newly added date input
+    const newDateInput = newSection.querySelector('.date2');
+    const newDayDisplay = newSection.querySelector('#day2');
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    
+    newDateInput.addEventListener('change', () => {
+        const selectedDate = new Date(newDateInput.value);
+        const dayOfWeek = daysOfWeek[selectedDate.getDay()];
+        newDayDisplay.textContent = dayOfWeek ? dayOfWeek : 'Invalid Date';
+    });
+}
+        </script>
+        <script>
+            //for swapping the values
+            function swapValues_1() {
+                const fromStation = document .getElementById("from_1");
+                const toStation =document.getElementById("to_1");
+                temp=fromStation.value;
+                fromStation.value = toStation.value;
+                toStation.value = temp;
+
+            }
+        </script>
+        <script>
+            //for swapping the values
+            function swapValues_2() {
+                const fromStation = document .getElementById("from_2");
+                const toStation =document.getElementById("to_2");
+                temp=fromStation.value;
+                fromStation.value = toStation.value;
+                toStation.value = temp;
+
+            }
+        </script>
+        
+        <script>
+            // Add this inside the <script> tag in your code
+
+            // Function to update the selected class in the main form
+        function updateSelectedClass(selectedClass) {
+        document.getElementById("selected-class").textContent = selectedClass;
+        }
+
+        // Add event listeners to each radio button in the modal
+        document.getElementById("economy").onclick = function() {
+            updateSelectedClass("Economy");
+        };
+        document.getElementById("premium").onclick = function() {
+            updateSelectedClass("Premium Economy");
+        };
+        document.getElementById("buisiness").onclick = function() {
+            updateSelectedClass("Business");
+        };
+        document.getElementById("firstclass").onclick = function() {
+            updateSelectedClass("First Class");
+        };
+
+        // Call travAdd when the user clicks "Done" in the modal
+        function travAdd() {
+            const adults = parseInt(document.getElementById("adults").value);
+            const children = parseInt(document.getElementById("children").value);
+            const totalTravelers = adults + children;
+            document.getElementById("cart1").textContent = totalTravelers; // Update the traveler count
+            closeModal(); // Close the modal
+        }
+
+        </script>
+        <script>
+            function checkInputs(){
+                const fromStation= document.getElementById("from_1");
+                const toStation = document.getElementById("to_1");
+                if (fromStation.value === toStation.value){
+                    alert("Pickup and drop should Not to be Same");
+                }
+
+            }
+        </script>
+        <script>
+            function removeCity(button){
+                const cityForm =  button.closest('.form-sections');
+                cityForm.remove();
+            }
+        </script>
+        <script>
+            AOS.init({
+                duration: 1200,
+            })
+        </script>
+       <script>
+        var slides = document.querySelectorAll('.slide');
+        var btns = document.querySelectorAll('.btn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                btns[i].classList.remove('active');
+            });
+            slides[index].classList.add('active');
+            btns[index].classList.add('active');
+        }
+
+        btns.forEach((btn, i) => {
+            btn.addEventListener("click", () => {
+                currentSlide = i;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Optional: Auto-slide functionality
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 4000); // Change slide every 3 seconds
+    </script>
+    <script>
+         function login(){
+                window.location.href="./Login.html";
+            }
+    </script>
+
+    </body>
